@@ -17,6 +17,7 @@ module control(
 
     output reg srcA_selector,
     output reg [1:0] srcB_selector,
+    output reg [2:0] REGDEST_SELETOR,
 
     output reg reset_out
 );
@@ -57,6 +58,7 @@ always @(posedge clock) begin
             ULAout_ctrl = 1'b0;
             srcA_selector = 1'b0;
             srcB_selector = 2'b00;
+            REGDEST_SELETOR = 2'b00;
             reset_out = 1'b1;  ///
 
             counter = 3'b000;
@@ -74,6 +76,7 @@ always @(posedge clock) begin
             ULAout_ctrl = 1'b0;
             srcA_selector = 1'b0;
             srcB_selector = 2'b00;
+            REGDEST_SELETOR = 2'b00;
             reset_out = 1'b0;  ///
 
             counter = 3'b000;
@@ -95,6 +98,7 @@ always @(posedge clock) begin
                     ULAout_ctrl = 1'b0;
                     srcA_selector = 1'b0;       ///
                     srcB_selector = 2'b01;      ///
+                    REGDEST_SELETOR = 2'b00;
                     reset_out = 1'b0;
 
                     counter = counter + 1;
@@ -112,6 +116,7 @@ always @(posedge clock) begin
                     ULAout_ctrl = 1'b0;
                     srcA_selector = 1'b0;
                     srcB_selector = 2'b01;
+                    REGDEST_SELETOR = 2'b00;
                     reset_out = 1'b0;
 
                     counter = counter + 1;
@@ -129,6 +134,7 @@ always @(posedge clock) begin
                     ULAout_ctrl = 1'b0;
                     srcA_selector = 1'b0;
                     srcB_selector = 2'b01;
+                    REGDEST_SELETOR = 2'b00;
                     reset_out = 1'b0;
 
                     counter = counter + 1;
@@ -162,6 +168,7 @@ always @(posedge clock) begin
                     ULAout_ctrl = 1'b0;
                     srcA_selector = 1'b0;
                     srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b00;
                     reset_out = 1'b0;
 
                     counter = 3'b000;
@@ -181,6 +188,7 @@ always @(posedge clock) begin
                     ULAout_ctrl = 1'b1;
                     srcA_selector = 1'b1;
                     srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b00;
                     reset_out = 1'b0;
 
                     counter = counter + 1;
@@ -198,6 +206,7 @@ always @(posedge clock) begin
                     ULAout_ctrl = 1'b1;
                     srcA_selector = 1'b1;
                     srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b01;
                     reset_out = 1'b0;
 
                     counter = 3'b000;
@@ -218,6 +227,7 @@ always @(posedge clock) begin
                     ULAout_ctrl = 1'b0;
                     srcA_selector = 1'b0;
                     srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b00;
                     reset_out = 1'b1;
 
                     counter = 3'b000;
@@ -230,14 +240,15 @@ always @(posedge clock) begin
 
                     PC_control = 1'b0;
                     ReadWrite = 1'b0;
-                    IRWrite = 1'b1;
+                    IRWrite = 1'b0;
                     RegWrite = 1'b0;
                     AWrite = 1'b0;
                     BWrite = 1'b0;
                     ULAop = 3'b001;
-                    ULAout_ctrl = 1'b0;
+                    ULAout_ctrl = 1'b1;
                     srcA_selector = 1'b1;
                     srcB_selector = 2'b10;
+                    REGDEST_SELETOR = 2'b00;
                     reset_out = 1'b0;
 
                     counter = counter + 1;
@@ -255,6 +266,7 @@ always @(posedge clock) begin
                     ULAout_ctrl = 1'b0;
                     srcA_selector = 1'b1;
                     srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b00;
                     reset_out = 1'b0;
 
                     counter = 3'b000;

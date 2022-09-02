@@ -1,10 +1,72 @@
-{/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd}
+/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/sign_extend_1.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/sign_extend_1.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module sign_extend_1
+
+Top level modules:
+	sign_extend_1
+
+} {} {}} /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/unitcontrol.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/unitcontrol.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module control
+
+Top level modules:
+	control
+
+} {} {}} {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Compiling entity Instr_Reg
 -- Compiling architecture behavioral_arch of Instr_Reg
+
+} {} {}} /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module reg_destination
+
+Top level modules:
+	reg_destination
+
+} {} {}} {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity Ula32
+-- Compiling architecture behavioral of Ula32
+
+} {} {}} /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcA.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcA.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module ulasrcA
+
+Top level modules:
+	ulasrcA
+
+} {} {}} /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcB.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcB.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module ulasrcB
+
+Top level modules:
+	ulasrcB
+
+} {} {}} {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity RegDesloc
+-- Compiling architecture behavioral_arch of RegDesloc
+
+} {} {}} {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Banco_reg.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Banco_reg.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity Banco_reg
+-- Compiling architecture behavioral_arch of Banco_reg
 
 } {} {}} {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Memoria.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Memoria.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -25,60 +87,5 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package std_logic_1164
 -- Compiling entity Registrador
 -- Compiling architecture behavioral_arch of Registrador
-
-} {} {}} /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcA.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcA.v
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module ulasrcA
-
-Top level modules:
-	ulasrcA
-
-} {} {}} {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd}
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity Ula32
--- Compiling architecture behavioral of Ula32
-
-} {} {}} /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/sign_extend_1.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/sign_extend_1.v
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module sign_extend_1
-
-Top level modules:
-	sign_extend_1
-
-} {} {}} /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module cpu
-
-Top level modules:
-	cpu
-
-} {} {}} {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Banco_reg.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Banco_reg.vhd}
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity Banco_reg
--- Compiling architecture behavioral_arch of Banco_reg
-
-} {} {}} {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd}
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity RegDesloc
--- Compiling architecture behavioral_arch of RegDesloc
-
-} {} {}} /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcB.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcB.v
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module ulasrcB
-
-Top level modules:
-	ulasrcB
 
 } {} {}}

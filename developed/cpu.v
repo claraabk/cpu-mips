@@ -46,6 +46,9 @@ module cpu(
     wire [31:0] scrA_output;
     wire [31:0] srcB_output;
 
+    wire [2:0] REGDEST_SELETOR;   // 3 bits
+    wire [4:0] regDest_output;
+
     Registrador PC_(
         clock,
         reset,
@@ -73,13 +76,20 @@ module cpu(
         OFFSET
     );
 
+    reg_destination reg_destination_(
+        REGDEST_SELETOR,
+        RT,
+        OFFSET[15:11],
+        regDest_output
+    );
+
     Banco_reg Registradores_(
         clock,
         reset,
         RegWrite,
         RS,
         RT,
-        OFFSET[15:11],
+        regDest_output,
         ULAout,
         ReadDataA,
         ReadDataB
@@ -158,6 +168,7 @@ module cpu(
         ULAop,
         srcA_selector,
         srcB_selector,
+        REGDEST_SELETOR,
         reset
     );
 
