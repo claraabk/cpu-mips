@@ -20,13 +20,6 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity Instr_Reg
 -- Compiling architecture behavioral_arch of Instr_Reg
 
-} {} {}} /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module reg_destination
-
-Top level modules:
-	reg_destination
-
 } {} {}} {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -79,6 +72,13 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package ram_constants
 -- Compiling entity Memoria
 -- Compiling architecture behavioral_arch of Memoria
+
+} {} {}} /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v {1 {vlog -work work -stats=none /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module cpu
+
+Top level modules:
+	cpu
 
 } {} {}} {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Registrador.vhd} {1 {vcom -work work -2002 -explicit -stats=none {/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Registrador.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020

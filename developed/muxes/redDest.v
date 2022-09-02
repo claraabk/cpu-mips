@@ -9,6 +9,6 @@ module reg_destination(
 
     output wire [4:0] mux_RegDest_output
 );
-    assign mux_RegDest_output = seletor_regdest[1] ? RT : OFFSET;
+    assign mux_RegDest_output = seletor_regdest == 2'b00 ? RT : OFFSET;
     // [2] = 31, senão (se [1] = 30 ou 29 (se [0] = 30, senão = 29), senão ent1 ou ent0 (se [0] = ent1, senão = ent0))
 endmodule
