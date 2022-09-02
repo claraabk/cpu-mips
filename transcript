@@ -302,3 +302,668 @@ run
 run
 run
 run
+quit -sim
+# End time: 12:44:21 on Sep 02,2022, Elapsed time: 0:25:33
+# Errors: 11, Warnings: 18
+# Compile of Banco_reg.vhd was successful.
+# Compile of Instr_Reg.vhd was successful.
+# Compile of Memoria.vhd was successful.
+# Compile of RegDesloc.vhd was successful.
+# Compile of Registrador.vhd was successful.
+# Compile of ula32.vhd was successful.
+# Compile of cpu.v was successful.
+# Compile of sign_extend_1.v was successful.
+# Compile of unitcontrol.v was successful.
+# Compile of alusrcB.v was successful.
+# Compile of alusrcA.v was successful.
+# Compile of redDest.v was successful.
+# 12 compiles, 0 failed with no errors.
+vsim work.cpu
+# vsim work.cpu 
+# Start time: 12:44:44 on Sep 02,2022
+# Loading work.cpu
+# Loading work.reg_destination
+# Loading work.sign_extend_1
+# Loading work.ulasrcA
+# Loading work.ulasrcB
+# Loading work.control
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.registrador(behavioral_arch)
+# Loading ieee.numeric_std(body)
+# Loading lpm.lpm_components
+# Loading work.ram_constants
+# Loading work.memoria(behavioral_arch)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading lpm.lpm_common_conversion(body)
+# Loading lpm.lpm_device_families(body)
+# Loading lpm.lpm_ram_dq(lpm_syn)
+# Loading work.instr_reg(behavioral_arch)
+# Loading work.banco_reg(behavioral_arch)
+# Loading work.ula32(behavioral)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'seletor_regdest'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (5) for port 'OFFSET'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+add wave -position insertpoint  \
+sim:/cpu/reset \
+sim:/cpu/clock
+add wave -position insertpoint  \
+sim:/cpu/PC_/Saida
+add wave -position insertpoint  \
+sim:/cpu/Registradores_/Cluster(10) \
+sim:/cpu/Registradores_/Cluster(11) \
+sim:/cpu/Registradores_/Cluster(12)
+add wave -position insertpoint  \
+sim:/cpu/control/state \
+sim:/cpu/control/OPCODE
+force -freeze sim:/cpu/clock 1 0, 0 {50 ps} -r 100
+force -freeze sim:/cpu/Registradores_/Cluster(11) 00000000000000000000000000000001 0
+force -freeze sim:/cpu/Registradores_/Cluster(12) 00000000000000000000000000000001 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'seletor_regdest'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (5) for port 'OFFSET'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+force -freeze sim:/cpu/clock 1 0, 0 {50 ps} -r 100
+force -freeze sim:/cpu/Registradores_/Cluster(11) 00000000000000000000000000000001 0
+force -freeze sim:/cpu/Registradores_/Cluster(12) 00000000000000000000000000000000 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'seletor_regdest'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (5) for port 'OFFSET'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+force -freeze sim:/cpu/clock 1 0, 0 {50 ps} -r 100
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'seletor_regdest'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (5) for port 'OFFSET'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+force -freeze sim:/cpu/clock 1 0, 0 {50 ps} -r 100
+force -freeze sim:/cpu/Registradores_/Cluster(12) 00000000000000000000000000000001 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'seletor_regdest'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (5) for port 'OFFSET'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+force -freeze sim:/cpu/clock 1 0, 0 {50 ps} -r 100
+force -freeze sim:/cpu/Registradores_/Cluster(11) 00000000000000000000000000000001 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+add wave -position insertpoint  \
+sim:/cpu/ULAoutput_/Saida
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'seletor_regdest'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (5) for port 'OFFSET'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+force -freeze sim:/cpu/clock 1 0, 0 {50 ps} -r 100
+force -freeze sim:/cpu/Registradores_/Cluster(11) 00000000000000000000000000000001 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+run
+run
+run
+run
+run
+run
+run
+run
+quit -sim
+# End time: 12:52:50 on Sep 02,2022, Elapsed time: 0:08:06
+# Errors: 11, Warnings: 17
+# Compile of Banco_reg.vhd was successful.
+# Compile of Instr_Reg.vhd was successful.
+# Compile of Memoria.vhd was successful.
+# Compile of RegDesloc.vhd was successful.
+# Compile of Registrador.vhd was successful.
+# Compile of ula32.vhd was successful.
+# Compile of cpu.v was successful.
+# Compile of sign_extend_1.v was successful.
+# Compile of unitcontrol.v was successful.
+# Compile of alusrcB.v was successful.
+# Compile of alusrcA.v was successful.
+# Compile of redDest.v was successful.
+# 12 compiles, 0 failed with no errors.
+vsim work.cpu
+# vsim work.cpu 
+# Start time: 12:53:03 on Sep 02,2022
+# Loading work.cpu
+# Loading work.reg_destination
+# Loading work.sign_extend_1
+# Loading work.ulasrcA
+# Loading work.ulasrcB
+# Loading work.control
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.registrador(behavioral_arch)
+# Loading ieee.numeric_std(body)
+# Loading lpm.lpm_components
+# Loading work.ram_constants
+# Loading work.memoria(behavioral_arch)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading lpm.lpm_common_conversion(body)
+# Loading lpm.lpm_device_families(body)
+# Loading lpm.lpm_ram_dq(lpm_syn)
+# Loading work.instr_reg(behavioral_arch)
+# Loading work.banco_reg(behavioral_arch)
+# Loading work.ula32(behavioral)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'seletor_regdest'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (5) for port 'OFFSET'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+add wave -position insertpoint  \
+sim:/cpu/reset \
+sim:/cpu/clock
+add wave -position insertpoint  \
+sim:/cpu/PC_/Saida
+add wave -position insertpoint  \
+sim:/cpu/Registradores_/Cluster(10) \
+sim:/cpu/Registradores_/Cluster(11) \
+sim:/cpu/Registradores_/Cluster(12)
+add wave -position insertpoint  \
+sim:/cpu/control/state \
+sim:/cpu/control/OPCODE
+force -freeze sim:/cpu/clock 1 0, 0 {50 ps} -r 100
+force -freeze sim:/cpu/Registradores_/Cluster(11) 00000000000000000000000000000001 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'seletor_regdest'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (5) for port 'OFFSET'. The port definition is at: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/reg_destination_ File: /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v Line: 79
+force -freeze sim:/cpu/clock 1 0, 0 {50 ps} -r 100
+force -freeze sim:/cpu/Registradores_/Cluster(11) 00000000000000000000000000000001 0
+force -freeze sim:/cpu/Registradores_/Cluster(12) 00000000000000000000000000000001 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/Registradores_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 1  Instance: /cpu/MEM_
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run

@@ -15,7 +15,7 @@ Z0 w1661821335
 Z1 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
 Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
-!i122 554
+!i122 578
 Z4 d/home/claraabk/Documents/college/3p/infrahard/aaaaaa
 Z5 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Banco_reg.vhd
 Z6 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Banco_reg.vhd
@@ -25,9 +25,9 @@ V:adHbk0Ym0TAKYW83J5Y[3
 !s100 hZ46CT_BzQl8j]02_Vf=o2
 Z7 OV;C;2020.1;71
 32
-Z8 !s110 1662131920
+Z8 !s110 1662133976
 !i10b 1
-Z9 !s108 1662131920.000000
+Z9 !s108 1662133975.000000
 Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Banco_reg.vhd|
 Z11 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Banco_reg.vhd|
 !i113 1
@@ -38,7 +38,7 @@ R1
 R2
 R3
 DEx4 work 9 banco_reg 0 22 :adHbk0Ym0TAKYW83J5Y[3
-!i122 554
+!i122 578
 l93
 L85 34
 VY7l=BkTbhRVIWWGL4mMo60
@@ -54,59 +54,59 @@ R11
 R12
 R13
 vcontrol
-Z14 !s110 1662131921
+R8
 !i10b 1
-!s100 1LHaEl4ML0;fDb>H@f9Jb2
-Z15 !s11b Dg1SIo80bB@j0V0VzS_@n1
-I:SDUfkjflgL`:RXAo;F9h3
-Z16 VDg1SIo80bB@j0V0VzS_@n1
+!s100 aJf3c7b6d@>i3aQ>7E6i`2
+Z14 !s11b Dg1SIo80bB@j0V0VzS_@n1
+Io>:gRV:iQUM0HX:lNVBXd0
+Z15 VDg1SIo80bB@j0V0VzS_@n1
 R4
-w1662131765
+w1662133964
 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/unitcontrol.v
 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/unitcontrol.v
-!i122 562
-L0 1 324
-Z17 OV;L;2020.1;71
+!i122 586
+L0 1 369
+Z16 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z18 !s108 1662131921.000000
+Z17 !s108 1662133976.000000
 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/unitcontrol.v|
 !s90 -reportprogress|300|-work|work|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/unitcontrol.v|
 !i113 1
-Z19 o-work work
-Z20 tCvgOpt 0
+Z18 o-work work
+Z19 tCvgOpt 0
 vcpu
-R14
+R8
 !i10b 1
 !s100 ?`Dh0CnM6PoBW0CBOnMY>1
-R15
+R14
 I:D>eWGiR[<`PIn=gdkVO61
-R16
+R15
 R4
 w1662128820
 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v
 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v
-!i122 560
+!i122 584
 L0 1 175
-R17
+R16
 r1
 !s85 0
 31
-R18
+R17
 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v|
 !s90 -reportprogress|300|-work|work|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/cpu.v|
 !i113 1
+R18
 R19
-R20
 Einstr_reg
 R0
 R2
 R3
-!i122 555
+!i122 579
 R4
-Z21 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd
-Z22 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd
+Z20 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd
+Z21 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd
 l0
 L42 1
 VAfV1kYS402dnLRiFO;Z7_2
@@ -115,9 +115,9 @@ R7
 32
 R8
 !i10b 1
-R9
-Z23 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd|
-Z24 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd|
+R17
+Z22 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd|
+Z23 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Instr_Reg.vhd|
 !i113 1
 R12
 R13
@@ -125,7 +125,7 @@ Abehavioral_arch
 R2
 R3
 DEx4 work 9 instr_reg 0 22 AfV1kYS402dnLRiFO;Z7_2
-!i122 555
+!i122 579
 l59
 L56 32
 VTD836jU:>9m^d?0ed1C0O3
@@ -134,56 +134,56 @@ R7
 32
 R8
 !i10b 1
-R9
+R17
+R22
 R23
-R24
 !i113 1
 R12
 R13
 Ememoria
 R0
-Z25 DPx4 work 13 ram_constants 0 22 BbIcggj=<H_W75Jb?WIoZ0
-Z26 DPx3 lpm 14 lpm_components 0 22 ZZ?0`GZD@?:kcFM0gmf[@1
+Z24 DPx4 work 13 ram_constants 0 22 BbIcggj=<H_W75Jb?WIoZ0
+Z25 DPx3 lpm 14 lpm_components 0 22 ZZ?0`GZD@?:kcFM0gmf[@1
 R1
 R2
 R3
-!i122 556
+!i122 580
 R4
-Z27 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Memoria.vhd
-Z28 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Memoria.vhd
+Z26 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Memoria.vhd
+Z27 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Memoria.vhd
 l0
 L67 1
 V<[RFRXeHV^PMOiiinkBoS0
 !s100 __XEo>II7SFLX6Xa7VZA63
 R7
 32
-R14
+R8
 !i10b 1
-R9
-Z29 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Memoria.vhd|
-Z30 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Memoria.vhd|
+R17
+Z28 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Memoria.vhd|
+Z29 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Memoria.vhd|
 !i113 1
 R12
 R13
 Abehavioral_arch
+R24
 R25
-R26
 R1
 R2
 R3
 DEx4 work 7 memoria 0 22 <[RFRXeHV^PMOiiinkBoS0
-!i122 556
+!i122 580
 l103
 L79 78
 VR9W83dOfA7lWR9j>i6THA2
 !s100 aLo:Seezh^aEQ@MaJf[__3
 R7
 32
-R14
+R8
 !i10b 1
-R9
+R17
+R28
 R29
-R30
 !i113 1
 R12
 R13
@@ -191,16 +191,16 @@ vmux_8
 !s110 1662100580
 !i10b 1
 !s100 @dcgMRK6<MeRYfmIe3YCC0
-R15
+R14
 I1N=Ucgz[Oi=Aa50a<cO<]2
-R16
+R15
 R4
 w1662100463
 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/mux_8.v
 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/mux_8.v
 !i122 42
-Z31 L0 1 10
-R17
+Z30 L0 1 10
+R16
 r1
 !s85 0
 31
@@ -208,22 +208,22 @@ r1
 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/mux_8.v|
 !s90 -reportprogress|300|-work|work|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/mux_8.v|
 !i113 1
+R18
 R19
-R20
 vmux_9
 !s110 1662101497
 !i10b 1
 !s100 >EAehhOY4AioZzdfPknNb0
-R15
+R14
 I;j>8S<k@bk0`PdD[f2TO;1
-R16
+R15
 R4
-Z32 w1661986459
+Z31 w1661986459
 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/mux_9.v
 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/mux_9.v
 !i122 140
 L0 1 13
-R17
+R16
 r1
 !s85 0
 31
@@ -231,71 +231,71 @@ r1
 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/mux_9.v|
 !s90 -reportprogress|300|-work|work|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/mux_9.v|
 !i113 1
+R18
 R19
-R20
 Pram_constants
-!i122 556
+!i122 580
 R0
 R4
+R26
 R27
-R28
 l0
 L47 1
 VBbIcggj=<H_W75Jb?WIoZ0
 !s100 5;`Z:D@MR5CT6j_[c9;6h3
 R7
 32
-R14
+R8
 !i10b 1
-R9
+R17
+R28
 R29
-R30
 !i113 1
 R12
 R13
 vreg_destination
-Z33 !s110 1662131922
+!s110 1662133977
 !i10b 1
 !s100 6Fn]B;E?A?<geGA`YC1Pg0
-R15
+R14
 IC9A<Gl5KfLcQLjJO^335L0
-R16
+R15
 R4
 w1662119444
 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v
 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v
-!i122 565
+!i122 589
 L0 1 14
-R17
+R16
 r1
 !s85 0
 31
-!s108 1662131922.000000
+R17
 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v|
 !s90 -reportprogress|300|-work|work|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/redDest.v|
 !i113 1
+R18
 R19
-R20
 Eregdesloc
 R0
 R1
 R2
 R3
-!i122 557
+!i122 581
 R4
-Z34 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd
-Z35 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd
+Z32 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd
+Z33 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd
 l0
 L80 1
 V4GibeROOKf]^CUjTE67Bo0
 !s100 =0ZG0kkZKT?Zo?iX2R9=P1
 R7
 32
-R14
+R8
 !i10b 1
-R18
-Z36 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd|
-Z37 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd|
+R17
+Z34 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd|
+Z35 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/RegDesloc.vhd|
 !i113 1
 R12
 R13
@@ -304,18 +304,18 @@ R1
 R2
 R3
 DEx4 work 9 regdesloc 0 22 4GibeROOKf]^CUjTE67Bo0
-!i122 557
+!i122 581
 l98
 L93 38
 VDFCTADkAb^4XhT09kD<k32
 !s100 3`2HClJO^bJLd6@PodWh?3
 R7
 32
-R14
+R8
 !i10b 1
-R18
-R36
-R37
+R17
+R34
+R35
 !i113 1
 R12
 R13
@@ -323,21 +323,21 @@ Eregistrador
 R0
 R2
 R3
-!i122 558
+!i122 582
 R4
-Z38 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Registrador.vhd
-Z39 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Registrador.vhd
+Z36 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Registrador.vhd
+Z37 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Registrador.vhd
 l0
 L53 1
 VD=`aG^VOPEDP69ifb8G;52
 !s100 ^e8=Z<CbNTLXR@XGZJMQo3
 R7
 32
-R14
+R8
 !i10b 1
-R18
-Z40 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Registrador.vhd|
-Z41 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Registrador.vhd|
+R17
+Z38 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Registrador.vhd|
+Z39 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/Registrador.vhd|
 !i113 1
 R12
 R13
@@ -345,64 +345,64 @@ Abehavioral_arch
 R2
 R3
 DEx4 work 11 registrador 0 22 D=`aG^VOPEDP69ifb8G;52
-!i122 558
+!i122 582
 l66
 L65 19
 V<kVfXRZJUh40ja<<lN_3:3
 !s100 EXKKzlBL1ARAk5TCN4`Vg2
 R7
 32
-R14
+R8
 !i10b 1
-R18
-R40
-R41
+R17
+R38
+R39
 !i113 1
 R12
 R13
 vsign_extend_1
-R14
+R8
 !i10b 1
 !s100 8gS1m;KNU>dIDTEEaj6Ub3
-R15
+R14
 I6e5YQT?j4UXE>WLlT65743
-R16
+R15
 R4
-R32
+R31
 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/sign_extend_1.v
 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/sign_extend_1.v
-!i122 561
+!i122 585
 L0 1 8
-R17
+R16
 r1
 !s85 0
 31
-R18
+R17
 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/sign_extend_1.v|
 !s90 -reportprogress|300|-work|work|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/sign_extend_1.v|
 !i113 1
+R18
 R19
-R20
 Eula32
 R0
 R1
 R2
 R3
-!i122 559
+!i122 583
 R4
-Z42 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd
-Z43 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd
+Z40 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd
+Z41 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd
 l0
 L63 1
 VM1`EhBco;Cb9<:6CC>b?e2
 !s100 bGmbVJaTC>R`I<lBgn7@L3
 R7
 32
-R14
+R8
 !i10b 1
-R18
-Z44 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd|
-Z45 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd|
+R17
+Z42 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd|
+Z43 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/Componentes do Projeto/ula32.vhd|
 !i113 1
 R12
 R13
@@ -411,66 +411,66 @@ R1
 R2
 R3
 DEx4 work 5 ula32 0 22 M1`EhBco;Cb9<:6CC>b?e2
-!i122 559
+!i122 583
 l89
 L79 138
 VF94M;2UJ^55hCen3Z[Kfk0
 !s100 1E>E2KjDKb=5dkES8U2ha0
 R7
 32
-R14
+R8
 !i10b 1
-R18
-R44
-R45
+R17
+R42
+R43
 !i113 1
 R12
 R13
 vulasrcA
-R33
+R8
 !i10b 1
 !s100 18^l3GI96lk?mg98g80XQ2
-R15
+R14
 IEhHDl12mN82l]9ihBIgT[0
-R16
+R15
 R4
 w1662101116
 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcA.v
 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcA.v
-!i122 564
-R31
-R17
+!i122 588
+R30
+R16
 r1
 !s85 0
 31
-R18
+R17
 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcA.v|
 !s90 -reportprogress|300|-work|work|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcA.v|
 !i113 1
+R18
 R19
-R20
 nulasrc@a
 vulasrcB
-R14
+R8
 !i10b 1
 !s100 YYGo]K7TBS0lemeR=9k[g2
-R15
+R14
 I@OlTD`JASkb<lE>P4^kf@2
-R16
+R15
 R4
 w1662102719
 8/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcB.v
 F/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcB.v
-!i122 563
-R31
-R17
+!i122 587
+R30
+R16
 r1
 !s85 0
 31
-R18
+R17
 !s107 /home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcB.v|
 !s90 -reportprogress|300|-work|work|-stats=none|/home/claraabk/Documents/college/3p/infrahard/aaaaaa/developed/muxes/alusrcB.v|
 !i113 1
+R18
 R19
-R20
 nulasrc@b
