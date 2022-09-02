@@ -191,7 +191,7 @@ always @(posedge clock) begin
                     PC_control = 1'b0;
                     ReadWrite = 1'b0;
                     IRWrite = 1'b0;
-                    RegWrite = 1'b0;
+                    RegWrite = 1'b1;
                     AWrite = 1'b0;
                     BWrite = 1'b0;
                     ULAop = 3'b001;
@@ -231,7 +231,7 @@ always @(posedge clock) begin
                     PC_control = 1'b0;
                     ReadWrite = 1'b0;
                     IRWrite = 1'b1;
-                    RegWrite = 1'b1;
+                    RegWrite = 1'b0;
                     AWrite = 1'b0;
                     BWrite = 1'b0;
                     ULAop = 3'b001;
