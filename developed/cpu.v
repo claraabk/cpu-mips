@@ -46,8 +46,20 @@ module cpu(
     wire [31:0] scrA_output;
     wire [31:0] srcB_output;
 
-    wire [2:0] REGDEST_SELETOR;   // 3 bits
+    wire [1:0] REGDEST_SELETOR;   // 3 bits
     wire [4:0] regDest_output;
+
+    wire MEMtoREG_SELETOR;
+    wire [31:0] memToReg_output;
+
+    wire [2:0] shiftCtrl;
+    wire [31:0] shiftReg_output;
+
+    wire shiftAmt;
+    wire [4:0] shiftAmt_output;
+
+    wire shiftSrc;
+    wire [31:0] shiftSrc_output;
 
     Registrador PC_(
         clock,
@@ -81,6 +93,36 @@ module cpu(
         RT,
         OFFSET[15:11],
         regDest_output
+    );
+
+    shift_amount shift_amount_(
+        shiftAmt,
+        B_output,
+        OFFSET[10:6],
+        shiftAmt_output
+    );
+
+    shift_src shift_src_(
+        shiftSrc,
+        A_output,
+        B_output,
+        shiftSrc_output
+    );
+
+    RegDesloc shift_reg_(
+        clock,
+        reset,
+        shiftCtrl,
+        shiftAmt_output,
+        shiftSrc_output,
+        shiftReg_output
+    );
+
+    mem_to_reg mem_to_reg_(
+        MEMtoREG_SELETOR,
+        ULAout,
+        shiftReg_output,
+        memToReg_output
     );
 
     Banco_reg Registradores_(
@@ -169,6 +211,10 @@ module cpu(
         srcA_selector,
         srcB_selector,
         REGDEST_SELETOR,
+        MEMtoREG_SELETOR,
+        shiftAmt,
+        shiftSrc,
+        shiftCtrl,
         reset
     );
 
