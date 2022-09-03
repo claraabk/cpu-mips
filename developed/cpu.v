@@ -63,6 +63,10 @@ module cpu(
 
     wire [31:0] sign_extend1_32_output;
 
+    wire pcsrc_selector;
+    wire [31:0] conc_SL26_PC_output;
+    wire [31:0] ULAresult;
+
     Registrador PC_(
         clock,
         reset,
@@ -153,7 +157,7 @@ module cpu(
         clock,
         reset,
         ULAout_ctrl,
-        PCSrc_output,
+        ULAresult,
         ULAout
     );
 
@@ -194,13 +198,32 @@ module cpu(
         scrA_output,
         srcB_output,
         ULAop,
-        PCSrc_output,
+
+        ULAresult,
         Overflow,
         Neg,
         Zero,
         EQ,
         GT,
         LT
+    );
+
+    SL_26to28_PC concatenacao(
+        RS,
+        RT,
+        OFFSET,
+        PC_output,
+
+        conc_SL26_PC_output
+    );
+
+    pcsrc PcSrc_(
+        pcsrc_selector,
+
+        ULAresult,
+        conc_SL26_PC_output,
+
+        PCSrc_output
     );
 
     control control(
@@ -220,6 +243,7 @@ module cpu(
         srcB_selector,
         REGDEST_SELETOR,
         MEMtoREG_SELETOR,
+        pcsrc_selector,
         shiftAmt,
         shiftSrc,
         shiftCtrl,

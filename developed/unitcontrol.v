@@ -19,6 +19,7 @@ module control(
     output reg [1:0] srcB_selector,
     output reg [1:0] REGDEST_SELETOR,
     output reg [3:0] MEMtoREG_SELETOR,
+    output reg pcsrc_selector;
     output reg shiftAmt,
     output reg shiftSrc,
     output reg [2:0] shiftCtrl,
@@ -35,12 +36,14 @@ parameter addi_st = 7'b0000110;
 parameter sub_st = 7'b0000111;
 parameter and_st = 7'b0001000;
 parameter slt_st = 7'b0001010;
+parameter j_st = 7'b0001110;
 parameter reset_st = 7'b1111111;
 
 // OPCODES
 parameter R = 6'b000000;
 parameter addi_op = 6'b001000;
 parameter reset_op = 6'b111111;
+parameter j_op = 6'b000010;
 
 // funct 
 parameter add_funct = 6'b100000;
@@ -71,6 +74,7 @@ always @(posedge clock) begin
             srcB_selector = 2'b00;
             REGDEST_SELETOR = 2'b00;
             MEMtoREG_SELETOR = 4'b0000;
+            pcsrc_selector = 1'b0;
             shiftAmt = 1'b0;
             shiftSrc = 1'b0;
             shiftCtrl = 3'b000;
@@ -93,6 +97,7 @@ always @(posedge clock) begin
             srcB_selector = 2'b00;
             REGDEST_SELETOR = 2'b00;
             MEMtoREG_SELETOR = 4'b0000;
+            pcsrc_selector = 1'b0;
             shiftAmt = 1'b0;
             shiftSrc = 1'b0;
             shiftCtrl = 3'b000;
@@ -119,6 +124,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b01;      ///
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -141,6 +147,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b01;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -163,6 +170,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b01;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -199,6 +207,10 @@ always @(posedge clock) begin
                         addi_op: begin
                             state = addi_st;
                         end
+
+                        j_op: begin
+                            state = j_st;
+                        end
                     endcase
 
                     PC_control = 1'b0;
@@ -213,6 +225,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -237,6 +250,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -259,6 +273,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -284,6 +299,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -309,6 +325,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b10;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -331,6 +348,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -356,6 +374,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -378,6 +397,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -403,6 +423,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -425,6 +446,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
@@ -449,6 +471,31 @@ always @(posedge clock) begin
                 srcB_selector = 2'b00;
                 REGDEST_SELETOR = 2'b01;
                 MEMtoREG_SELETOR = 4'b0100;
+                pcsrc_selector = 1'b0;
+                shiftAmt = 1'b0;
+                shiftSrc = 1'b0;
+                shiftCtrl = 3'b000;
+                reset_out = 1'b0;
+
+                counter = 3'b000;
+            end
+
+            j_st: begin
+                state = common_st;
+
+                PC_control = 1'b1;              ///
+                ReadWrite = 1'b0;
+                IRWrite = 1'b0;
+                RegWrite = 1'b0;
+                AWrite = 1'b0;
+                BWrite = 1'b0;
+                ULAop = 3'b000;
+                ULAout_ctrl = 1'b0;
+                srcA_selector = 1'b0;
+                srcB_selector = 2'b00;
+                REGDEST_SELETOR = 2'b00;
+                MEMtoREG_SELETOR = 4'b0000;
+                pcsrc_selector = 1'b1;          ///
                 shiftAmt = 1'b0;
                 shiftSrc = 1'b0;
                 shiftCtrl = 3'b000;
