@@ -40,6 +40,7 @@ parameter sra_st = 7'b0001011;
 parameter srl_st = 7'b0001100;
 parameter sllv_st = 7'b0001101;
 parameter srav_st = 7'b0001110;
+parameter slti_st = 7'b0001111;
 parameter reset_st = 7'b1111111;
 
 // OPCODES
@@ -57,6 +58,7 @@ parameter sra_funct = 6'b000011;
 parameter srl_funct = 6'b000010;
 parameter sllv_funct = 6'b000100;
 parameter srav_funct = 6'b000111;
+parameter slti_funct = 6'b001010;
 
 initial begin
     // Lembrete: colocar valor 227 no registrador 29
@@ -217,6 +219,10 @@ always @(posedge clock) begin
 
                             srav_funct: begin
                                 state = srav_st;
+                            end
+
+                            slti_funct: begin
+                                state = slti_st;
                             end
                             endcase
                         end
@@ -840,6 +846,29 @@ always @(posedge clock) begin
 
                     counter = 3'b000;
                 end
+            end
+
+            slti_st: begin
+                state = common_st;
+
+                PC_control = 1'b0;
+                ReadWrite = 1'b0;
+                IRWrite = 1'b0;
+                RegWrite = 1'b1;
+                AWrite = 1'b0;
+                BWrite = 1'b0;
+                ULAop = 3'b111;
+                ULAout_ctrl = 1'b0;
+                srcA_selector = 1'b1;
+                srcB_selector = 2'b10;
+                REGDEST_SELETOR = 2'b00;
+                MEMtoREG_SELETOR = 4'b0100;
+                shiftAmt = 1'b0;
+                shiftSrc = 1'b0;
+                shiftCtrl = 3'b000;
+                reset_out = 1'b0;
+
+                counter = 3'b000;
             end
         endcase
     end
