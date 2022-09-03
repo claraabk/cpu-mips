@@ -36,6 +36,7 @@ parameter sub_st = 7'b0000111;
 parameter and_st = 7'b0001000;
 parameter sll_st = 7'b0001001;
 parameter slt_st = 7'b0001010;
+parameter sra_st = 7'b0001011;
 parameter reset_st = 7'b1111111;
 
 // OPCODES
@@ -49,6 +50,7 @@ parameter sub_funct = 6'b100010;
 parameter and_funct = 6'b100100;
 parameter sll_funct = 6'b000000;
 parameter slt_funct = 6'b101010 ;
+parameter sra_funct =  6'b000011;
 
 initial begin
     // Lembrete: colocar valor 227 no registrador 29
@@ -193,6 +195,10 @@ always @(posedge clock) begin
 
                             slt_funct: begin
                                 state = slt_st;
+                            end
+
+                            sra_funct: begin
+                                state = sra_st;
                             end
                             endcase
                         end
