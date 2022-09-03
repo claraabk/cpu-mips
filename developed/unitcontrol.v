@@ -38,6 +38,8 @@ parameter sll_st = 7'b0001001;
 parameter slt_st = 7'b0001010;
 parameter sra_st = 7'b0001011;
 parameter srl_st = 7'b0001100;
+parameter sllv_st = 7'b0001101;
+parameter srav_st = 7'b0001110;
 parameter reset_st = 7'b1111111;
 
 // OPCODES
@@ -50,9 +52,11 @@ parameter add_funct = 6'b100000;
 parameter sub_funct = 6'b100010;
 parameter and_funct = 6'b100100;
 parameter sll_funct = 6'b000000;
-parameter slt_funct = 6'b101010 ;
+parameter slt_funct = 6'b101010;
 parameter sra_funct = 6'b000011;
 parameter srl_funct = 6'b000010;
+parameter sllv_funct = 6'b000100;
+parameter srav_funct = 6'b000111;
 
 initial begin
     // Lembrete: colocar valor 227 no registrador 29
@@ -205,6 +209,14 @@ always @(posedge clock) begin
 
                             srl_funct: begin
                                 state = srl_st;
+                            end
+
+                            sllv_funct: begin
+                                state = sllv_st;
+                            end
+
+                            srav_funct: begin
+                                state = srav_st;
                             end
                             endcase
                         end
@@ -659,6 +671,148 @@ always @(posedge clock) begin
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b011;
+                    reset_out = 1'b0;
+
+                    counter = counter + 1;
+                end
+
+                else if (counter == 3'b010) begin
+                    state = common_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0;
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b1;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b01;
+                    MEMtoREG_SELETOR = 4'b1000;
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b010;
+                    reset_out = 1'b0;
+
+                    counter = 3'b000;
+                end
+            end
+
+            sllv_st: begin
+                if (counter == 3'b000) begin
+                    state = sllv_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0;
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b0;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b01;
+                    MEMtoREG_SELETOR = 4'b1000;
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b001;
+                    reset_out = 1'b0;
+
+                    counter = counter + 1;
+                end
+
+                else if (counter == 3'b001) begin
+                    state = sllv_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0;
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b0;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b01;
+                    MEMtoREG_SELETOR = 4'b1000;
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b010;
+                    reset_out = 1'b0;
+
+                    counter = counter + 1;
+                end
+
+                else if (counter == 3'b010) begin
+                    state = common_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0;
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b1;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b01;
+                    MEMtoREG_SELETOR = 4'b1000;
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b010;
+                    reset_out = 1'b0;
+
+                    counter = 3'b000;
+                end
+            end
+
+            srav_st: begin
+                if (counter == 3'b000) begin
+                    state = srav_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0;
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b0;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b01;
+                    MEMtoREG_SELETOR = 4'b1000;
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b001;
+                    reset_out = 1'b0;
+
+                    counter = counter + 1;
+                end
+
+                else if (counter == 3'b001) begin
+                    state = srav_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0;
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b0;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b01;
+                    MEMtoREG_SELETOR = 4'b1000;
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b100;
                     reset_out = 1'b0;
 
                     counter = counter + 1;
