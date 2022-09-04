@@ -24,6 +24,8 @@ module cpu(
 
     wire srcA_selector;
     wire [1:0] srcB_selector;
+    wire HI_write;
+    wire LO_write;
 
 
 // Data wires
@@ -63,9 +65,34 @@ module cpu(
 
     wire [31:0] sign_extend1_32_output;
 
-    wire pcsrc_selector;
+    wire [1:0] pcsrc_selector;
     wire [31:0] conc_SL26_PC_output;
     wire [31:0] ULAresult;
+
+    wire [31:0] MultDiv_output;
+    wire [31:0] HI_output;
+    wire [31:0] LO_output;
+
+    wire [31:0] SL_16to32_output;
+
+    wire [1:0] iord_selector;
+    wire [31:0] iord_output;
+
+    wire [1:0] SScontrol;
+    wire [31:0] MemDataReg_out;
+    wire [31:0] SScontrol_output;
+
+    wire [1:0] LScontrol;
+    wire [31:0] LScontrol_output;
+
+    wire MemDataReg_write;
+
+    wire EPCCtrl;
+    wire [31:0] EPC_output;
+
+    wire [1:0] excpCtrl;
+    wire [31:0] excpCtrl_output;
+
 
     Registrador PC_(
         clock,
@@ -75,11 +102,37 @@ module cpu(
         PC_output
     );
 
-    Memoria MEM_(
+    iord IorD(
+        iord_selector,
         PC_output,
+        ULAresult,
+        ULAout,
+        excpCtrl_output,
+
+        iord_output
+    );
+
+    StoreSize SS(
+        SScontrol,
+        B_output,
+        MemDataReg_out,
+
+        SScontrol_output
+    );
+
+
+    LoadSize LS(
+        LScontrol,
+        MemDataReg_out,
+
+        LScontrol_output
+    );
+
+    Memoria MEM_(
+        iord_output,
         clock,
         ReadWrite,
-        PCSrc_output,
+        SScontrol_output,
         Mem_output
     );
 
@@ -136,6 +189,23 @@ module cpu(
         ReadDataB
     );
 
+    Registrador HI(
+        clock,
+        reset,
+        HI_write,
+        MultDiv_output,
+
+        HI_output
+    );
+
+    Registrador LO(
+        clock,
+        reset,
+        LO_write,
+        MultDiv_output,
+
+        LO_output
+    );
 
     Registrador A_(
         clock,
@@ -161,6 +231,22 @@ module cpu(
         ULAout
     );
 
+    Registrador MemDataReg(
+        clock,
+        reset,
+        MemDataReg_write,
+        Mem_output,
+
+        MemDataReg_out
+    );
+
+    Registrador EPC(
+        clock,
+        reset,
+        EPCCtrl,
+        ULAresult,
+        EPC_output
+    );
 
     sign_extend_1 Sign_extend_1(
         OFFSET,
@@ -177,6 +263,11 @@ module cpu(
         ULAout,
         sign_extend1_32_output,
         shiftReg_output,
+        HI_output,
+        LO_output,
+        SL_16to32_output,
+        LScontrol_output,
+
         memToReg_output
     );
 
@@ -217,13 +308,26 @@ module cpu(
         conc_SL26_PC_output
     );
 
+    SL_16to32 shiftleft16(
+        OFFSET,
+
+        SL_16to32_output
+    );
+
     pcsrc PcSrc_(
         pcsrc_selector,
 
         ULAresult,
         conc_SL26_PC_output,
+        ULAout,
+        EPC_output,
 
         PCSrc_output
+    );
+
+    excpCtrl excpCtrl_(
+        excpCtrl,
+        excpCtrl_output
     );
 
     control control(
@@ -241,12 +345,23 @@ module cpu(
         ULAop,
         srcA_selector,
         srcB_selector,
+        HI_write,
+        LO_write,
         REGDEST_SELETOR,
         MEMtoREG_SELETOR,
         pcsrc_selector,
+        iord_selector,
+        SScontrol,
+        LScontrol,
+        MemDataReg_write,
         shiftAmt,
         shiftSrc,
         shiftCtrl,
+        EQ,
+        GT,
+        Overflow,
+        excpCtrl,
+        EPCCtrl,
         reset
     );
 
