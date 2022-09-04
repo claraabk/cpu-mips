@@ -21,7 +21,7 @@ module control(
     output reg LO_write,
     output reg [1:0] REGDEST_SELETOR,
     output reg [3:0] MEMtoREG_SELETOR,
-    output reg [1:0] pcsrc_selector,
+    output reg [2:0] pcsrc_selector,
     output reg [1:0] iord_selector,
     output reg [1:0] SScontrol,
     output reg [1:0] LScontrol,
@@ -35,6 +35,7 @@ module control(
     input wire Overflow,
 
     output reg [1:0] excpCtrl,
+    output reg [1:0] excpCtrl2,
     output reg EPCCtrl,
 
     output reg reset_out
@@ -68,13 +69,16 @@ parameter lui_st = 7'b1011101;
 parameter ble_st = 7'b0010010;
 parameter bgt_st = 7'b0010011;
 parameter addiu_st = 7'b0010100;
+parameter loads_st = 7'b0110001;
 parameter lw_st = 7'b1011001;
 parameter lh_st = 7'b1001001;
 parameter lb_st = 7'b1001011;
+parameter stores_st = 7'b0110011;
 parameter sw_st = 7'b1111001;
 parameter sh_st = 7'b1101001;
 parameter sb_st = 7'b1101011;
 parameter overflow_st = 7'b0010101;
+parameter rte_st = 7'b0010110;
 
 // OPCODES
 parameter R = 6'b000000;
@@ -110,6 +114,7 @@ parameter jr_funct = 6'b001000;
 parameter mfhi_funct = 6'b010000;
 parameter mflo_funct = 6'b010010;
 parameter break_funct = 6'b111111;
+parameter rte_funct = 6'b010011;
 
 initial begin
     reset_out = 1'b1;
@@ -134,7 +139,7 @@ always @(posedge clock) begin
             LO_write = 1'b0;
             REGDEST_SELETOR = 2'b00;
             MEMtoREG_SELETOR = 4'b0000;
-            pcsrc_selector = 2'b00;
+            pcsrc_selector = 3'b000;
             iord_selector = 2'b00;
             SScontrol = 2'b00;
             LScontrol = 2'b00;
@@ -143,6 +148,7 @@ always @(posedge clock) begin
             shiftSrc = 1'b0;
             shiftCtrl = 3'b000;
             excpCtrl = 2'b00;
+            excpCtrl2 = 2'b00;
             EPCCtrl = 1'b0;
             reset_out = 1'b1;  //
 
@@ -165,7 +171,7 @@ always @(posedge clock) begin
             LO_write = 1'b0;
             REGDEST_SELETOR = 2'b00;
             MEMtoREG_SELETOR = 4'b0000;
-            pcsrc_selector = 2'b00;
+            pcsrc_selector = 3'b000;
             iord_selector = 2'b00;
             SScontrol = 2'b00;
             LScontrol = 2'b00;
@@ -174,6 +180,7 @@ always @(posedge clock) begin
             shiftSrc = 1'b0;
             shiftCtrl = 3'b000;
             excpCtrl = 2'b00;
+            excpCtrl2 = 2'b00;
             EPCCtrl = 1'b0;
             reset_out = 1'b0;  //
 
@@ -200,7 +207,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -209,6 +216,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -231,7 +239,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b10;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -240,6 +248,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -257,12 +266,12 @@ always @(posedge clock) begin
                     ULAop = 3'b001;  //
                     ULAout_ctrl = 1'b1;
                     srcA_selector = 1'b0;
-                    srcB_selector = 2'b10;
+                    srcB_selector = 2'b11;
                     HI_write = 1'b0;
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -271,6 +280,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -332,6 +342,10 @@ always @(posedge clock) begin
                                     state = break_st;
                                 end
 
+                                rte_funct: begin
+                                    state = rte_st;
+                                end
+
                             endcase
                         end
 
@@ -348,7 +362,7 @@ always @(posedge clock) begin
                         end
 
                         j_op: begin
-                            state = j_op;
+                            state = j_st;
                         end
 
                         jal_op: begin
@@ -380,27 +394,27 @@ always @(posedge clock) begin
                         end
 
                         lw_op: begin
-                            state = lw_st;
+                            state = loads_st;
                         end
 
                         lh_op: begin
-                            state = lh_st;
+                            state = loads_st;
                         end
 
                         lb_op: begin
-                            state = lb_st;
+                            state = loads_st;
                         end
 
                         sw_op: begin
-                            state = sw_st;
+                            state = stores_st;
                         end
 
                         sh_op: begin
-                            state = sh_st;
+                            state = stores_st;
                         end
 
                         sb_op: begin
-                            state = sb_st;
+                            state = stores_st;
                         end
 
                     endcase
@@ -419,7 +433,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -428,6 +442,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -453,7 +468,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -462,6 +477,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -489,7 +505,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -498,6 +514,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -523,7 +540,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -532,6 +549,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b1;
 
@@ -549,7 +567,7 @@ always @(posedge clock) begin
                     RegWrite = 1'b0;
                     AWrite = 1'b0;
                     BWrite = 1'b0;
-                    ULAop = 3'b010;
+                    ULAop = 3'b001;
                     ULAout_ctrl = 1'b1;
                     srcA_selector = 1'b1;
                     srcB_selector = 2'b10;
@@ -557,7 +575,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -566,6 +584,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -592,7 +611,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -601,6 +620,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -618,7 +638,7 @@ always @(posedge clock) begin
                     RegWrite = 1'b0;
                     AWrite = 1'b0;
                     BWrite = 1'b0;
-                    ULAop = 3'b010;
+                    ULAop = 3'b001;
                     ULAout_ctrl = 1'b1;
                     srcA_selector = 1'b1;
                     srcB_selector = 2'b10;
@@ -626,7 +646,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -635,6 +655,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -657,7 +678,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -666,6 +687,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -691,7 +713,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -700,6 +722,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -726,7 +749,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -735,6 +758,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -760,7 +784,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -769,6 +793,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -791,7 +816,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -800,6 +825,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -825,7 +851,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -834,6 +860,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b1;
                     shiftCtrl = 3'b001;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -857,7 +884,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -866,6 +893,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b010;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -888,8 +916,8 @@ always @(posedge clock) begin
                     HI_write = 1'b0;
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
-                    MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0010;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -898,6 +926,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b010;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -922,8 +951,8 @@ always @(posedge clock) begin
                 HI_write = 1'b0;
                 LO_write = 1'b0;
                 REGDEST_SELETOR = 2'b01;
-                MEMtoREG_SELETOR = 4'b0100;
-                pcsrc_selector = 2'b00;
+                MEMtoREG_SELETOR = 4'b0001;
+                pcsrc_selector = 3'b000;
                 iord_selector = 2'b00;
                 SScontrol = 2'b00;
                 LScontrol = 2'b00;
@@ -932,6 +961,7 @@ always @(posedge clock) begin
                 shiftSrc = 1'b0;
                 shiftCtrl = 3'b000;
                 excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
                 EPCCtrl = 1'b0;
                 reset_out = 1'b0;
 
@@ -956,7 +986,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -965,6 +995,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b1;
                     shiftCtrl = 3'b001;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -988,7 +1019,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -997,6 +1028,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b100;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1019,8 +1051,8 @@ always @(posedge clock) begin
                     HI_write = 1'b0;
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
-                    MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0010;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1029,6 +1061,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b010;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1054,7 +1087,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1063,6 +1096,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b1;
                     shiftCtrl = 3'b001;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1086,7 +1120,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1095,6 +1129,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b011;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1117,8 +1152,8 @@ always @(posedge clock) begin
                     HI_write = 1'b0;
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
-                    MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0010;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1127,6 +1162,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b010;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1152,7 +1188,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1161,6 +1197,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b001;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1184,7 +1221,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1193,6 +1230,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b010;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1215,8 +1253,8 @@ always @(posedge clock) begin
                     HI_write = 1'b0;
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
-                    MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0010;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1225,6 +1263,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b010;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1250,7 +1289,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1259,6 +1298,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b001;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1282,7 +1322,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
                     MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1291,6 +1331,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b100;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1313,8 +1354,8 @@ always @(posedge clock) begin
                     HI_write = 1'b0;
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b01;
-                    MEMtoREG_SELETOR = 4'b1000;
-                    pcsrc_selector = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0010;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1323,6 +1364,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b010;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1346,8 +1388,8 @@ always @(posedge clock) begin
                 HI_write = 1'b0;
                 LO_write = 1'b0;
                 REGDEST_SELETOR = 2'b00;
-                MEMtoREG_SELETOR = 4'b0100;
-                pcsrc_selector = 2'b00;
+                MEMtoREG_SELETOR = 4'b0001;
+                pcsrc_selector = 3'b000;
                 iord_selector = 2'b00;
                 SScontrol = 2'b00;
                 LScontrol = 2'b00;
@@ -1356,6 +1398,7 @@ always @(posedge clock) begin
                 shiftSrc = 1'b0;
                 shiftCtrl = 3'b000;
                 excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
                 EPCCtrl = 1'b0;
                 reset_out = 1'b0;
 
@@ -1379,7 +1422,7 @@ always @(posedge clock) begin
                 LO_write = 1'b0;
                 REGDEST_SELETOR = 2'b00;
                 MEMtoREG_SELETOR = 4'b0000;
-                pcsrc_selector = 2'b01;          //
+                pcsrc_selector = 3'b001;          //
                 iord_selector = 2'b00;
                 SScontrol = 2'b00;
                 LScontrol = 2'b00;
@@ -1388,6 +1431,7 @@ always @(posedge clock) begin
                 shiftSrc = 1'b0;
                 shiftCtrl = 3'b000;
                 excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
                 EPCCtrl = 1'b0;
                 reset_out = 1'b0;
 
@@ -1412,7 +1456,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1421,6 +1465,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1436,14 +1481,14 @@ always @(posedge clock) begin
                     AWrite = 1'b0;
                     BWrite = 1'b0;
                     ULAop = 3'b000;
-                    ULAout_ctrl = 1'b0;         //
-                    srcA_selector = 1'b0;       //
+                    ULAout_ctrl = 1'b0; 
+                    srcA_selector = 1'b0;
                     srcB_selector = 2'b00;
                     HI_write = 1'b0;
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b10;    //
                     MEMtoREG_SELETOR = 4'b0000; //
-                    pcsrc_selector = 2'b01;     //
+                    pcsrc_selector = 3'b001;     //
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1452,6 +1497,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1476,7 +1522,7 @@ always @(posedge clock) begin
                 LO_write = 1'b0;
                 REGDEST_SELETOR = 2'b00;
                 MEMtoREG_SELETOR = 4'b0000;
-                pcsrc_selector = 2'b00;          //
+                pcsrc_selector = 3'b000;          //
                 iord_selector = 2'b00;
                 SScontrol = 2'b00;
                 LScontrol = 2'b00;
@@ -1485,6 +1531,7 @@ always @(posedge clock) begin
                 shiftSrc = 1'b0;
                 shiftCtrl = 3'b000;
                 excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
                 EPCCtrl = 1'b0;
                 reset_out = 1'b0;
 
@@ -1507,7 +1554,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b10;
+                    pcsrc_selector = 3'b010;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1516,6 +1563,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1536,7 +1584,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b10;
+                    pcsrc_selector = 3'b010;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1545,6 +1593,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1576,7 +1625,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b10;
+                    pcsrc_selector = 3'b010;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1585,6 +1634,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1605,7 +1655,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b10;
+                    pcsrc_selector = 3'b010;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1614,6 +1664,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1645,7 +1696,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b10;
+                    pcsrc_selector = 3'b010;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1654,6 +1705,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1674,7 +1726,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b10;
+                    pcsrc_selector = 3'b010;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1683,6 +1735,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1714,7 +1767,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b10;
+                    pcsrc_selector = 3'b010;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1723,6 +1776,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1743,7 +1797,7 @@ always @(posedge clock) begin
                     srcB_selector = 2'b00;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b10;
+                    pcsrc_selector = 3'b010;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1752,6 +1806,7 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
@@ -1784,7 +1839,7 @@ always @(posedge clock) begin
                 LO_write = 1'b0;
                 REGDEST_SELETOR = 2'b01; //
                 MEMtoREG_SELETOR = 4'b0011; //
-                pcsrc_selector = 2'b00;
+                pcsrc_selector = 3'b000;
                 iord_selector = 2'b00;
                 SScontrol = 2'b00;
                 LScontrol = 2'b00;
@@ -1793,6 +1848,7 @@ always @(posedge clock) begin
                 shiftSrc = 1'b0;
                 shiftCtrl = 3'b000;
                 excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
                 EPCCtrl = 1'b0;
                 reset_out = 1'b0;
 
@@ -1816,7 +1872,7 @@ always @(posedge clock) begin
                 LO_write = 1'b0;
                 REGDEST_SELETOR = 2'b01; //
                 MEMtoREG_SELETOR = 4'b0100; //
-                pcsrc_selector = 2'b00;
+                pcsrc_selector = 3'b000;
                 iord_selector = 2'b00;
                 SScontrol = 2'b00;
                 LScontrol = 2'b00;
@@ -1825,6 +1881,7 @@ always @(posedge clock) begin
                 shiftSrc = 1'b0;
                 shiftCtrl = 3'b000;
                 excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
                 EPCCtrl = 1'b0;
                 reset_out = 1'b0;
 
@@ -1849,7 +1906,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1858,13 +1915,14 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
                     counter = counter + 1;
                 end
                 else if (counter == 3'b001) begin
-                    state = break_st;
+                    state = common_st;
 
                     PC_control = 1'b0; //
                     ReadWrite = 1'b0;
@@ -1880,7 +1938,7 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
                     iord_selector = 2'b00;
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
@@ -1889,10 +1947,10 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
-                    counter = 3'b000;
                 end
             end
 
@@ -1913,7 +1971,7 @@ always @(posedge clock) begin
                 LO_write = 1'b0;
                 REGDEST_SELETOR = 2'b00; //
                 MEMtoREG_SELETOR = 4'b0101; //
-                pcsrc_selector = 2'b00; 
+                pcsrc_selector = 3'b000; 
                 iord_selector = 2'b00;
                 SScontrol = 2'b00;
                 LScontrol = 2'b00;
@@ -1922,15 +1980,17 @@ always @(posedge clock) begin
                 shiftSrc = 1'b0;
                 shiftCtrl = 3'b000;
                 excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
                 EPCCtrl = 1'b0;
                 reset_out = 1'b0;
 
                 counter = 3'b000;
             end
 
-            lw_st: begin
+            loads_st: begin
+                // clock 1
                 if (counter == 3'b000) begin
-                    state = lw_st;
+                    state = loads_st;
 
                     PC_control = 1'b0;
                     ReadWrite = 1'b0; //
@@ -1938,16 +1998,50 @@ always @(posedge clock) begin
                     RegWrite = 1'b0;
                     AWrite = 1'b0;
                     BWrite = 1'b0;
-                    ULAop = 3'b001; // ?????
-                    ULAout_ctrl = 1'b0;
+                    ULAop = 3'b001; // ADD
+                    ULAout_ctrl = 1'b1; // 
                     srcA_selector = 1'b1; //
                     srcB_selector = 2'b10; //
                     HI_write = 1'b0;
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00;
                     MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b01; //
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b00;
+                    SScontrol = 2'b00;
+                    LScontrol = 2'b00;
+                    MemDataReg_write = 1'b0;
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b000;
+                    excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
+                    EPCCtrl = 1'b0;
+                    reset_out = 1'b0;
+
+                    counter = counter + 1;
+                end
+                // clock 2 - wait 1
+                else if (counter == 3'b001) begin
+
+                    state = loads_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0; //
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b0;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0; 
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    HI_write = 1'b0;
+                    LO_write = 1'b0;
+                    REGDEST_SELETOR = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b10; //
                     SScontrol = 2'b00;
                     LScontrol = 2'b00;
                     MemDataReg_write = 1'b1; //
@@ -1955,13 +2049,63 @@ always @(posedge clock) begin
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
                     counter = counter + 1;
+
                 end
-                else if (counter == 3'b001) begin
-                    state = common_st; //
+                // clock 3 - wait 2
+                else if (counter == 3'b010) begin
+                    case(OPCODE)
+                        lw_op : begin
+                            state = lw_st;
+                        end
+                        lh_op: begin
+                            state = lh_st;
+                        end
+                        lb_op: begin
+                            state = lb_st;
+                        end
+                    endcase
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0; //
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b0;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0; 
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    HI_write = 1'b0;
+                    LO_write = 1'b0;
+                    REGDEST_SELETOR = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b10; //
+                    SScontrol = 2'b00;
+                    LScontrol = 2'b00;
+                    MemDataReg_write = 1'b1; //
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b000;
+                    excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
+                    EPCCtrl = 1'b0;
+                    reset_out = 1'b0;
+                    
+                    counter = 3'b000;
+                end
+
+            end
+
+            lw_st: begin
+                if (counter == 3'b000) begin
+
+                    state = lw_st;
 
                     PC_control = 1'b0;
                     ReadWrite = 1'b0;
@@ -1969,7 +2113,7 @@ always @(posedge clock) begin
                     RegWrite = 1'b1; //
                     AWrite = 1'b0;
                     BWrite = 1'b0;
-                    ULAop = 3'b000; 
+                    ULAop = 3'b000;
                     ULAout_ctrl = 1'b0;
                     srcA_selector = 1'b0;
                     srcB_selector = 2'b00;
@@ -1977,56 +2121,61 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00; //
                     MEMtoREG_SELETOR = 4'b0110; //
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b00; 
                     SScontrol = 2'b00;
                     LScontrol = 2'b01; //
-                    MemDataReg_write = 1'b0;
+                    MemDataReg_write = 1'b1; // ????????
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
-                    counter = 3'b000; //
+                    counter = counter + 1;
+
                 end
+                else if (counter == 3'b001) begin
+                    state = common_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0;
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b1; //
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    HI_write = 1'b0;
+                    LO_write = 1'b0;
+                    REGDEST_SELETOR = 2'b00; //
+                    MEMtoREG_SELETOR = 4'b0110; //
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b00; 
+                    SScontrol = 2'b00;
+                    LScontrol = 2'b01; //
+                    MemDataReg_write = 1'b0; // 
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b000;
+                    excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
+                    EPCCtrl = 1'b0;
+                    reset_out = 1'b0;
+
+                    counter = 3'b000;
+                end
+
             end
 
             lh_st: begin
                 if (counter == 3'b000) begin
+
                     state = lh_st;
-
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b0; //
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b001; // ?????
-                    ULAout_ctrl = 1'b0;
-                    srcA_selector = 1'b1; //
-                    srcB_selector = 2'b10; //
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b01; //
-                    SScontrol = 2'b00;
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b1; //
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
-
-                    counter = counter + 1;
-                end
-                else if (counter == 3'b001) begin
-                    state = common_st; //
 
                     PC_control = 1'b0;
                     ReadWrite = 1'b0;
@@ -2034,7 +2183,7 @@ always @(posedge clock) begin
                     RegWrite = 1'b1; //
                     AWrite = 1'b0;
                     BWrite = 1'b0;
-                    ULAop = 3'b000; 
+                    ULAop = 3'b000;
                     ULAout_ctrl = 1'b0;
                     srcA_selector = 1'b0;
                     srcB_selector = 2'b00;
@@ -2042,56 +2191,61 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00; //
                     MEMtoREG_SELETOR = 4'b0110; //
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b00; 
                     SScontrol = 2'b00;
                     LScontrol = 2'b10; //
-                    MemDataReg_write = 1'b0;
+                    MemDataReg_write = 1'b1; // ????????
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
-                    counter = 3'b000; //
+                    counter = counter + 1;
+
                 end
+                else if (counter == 3'b001) begin
+                    state = common_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0;
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b1; //
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    HI_write = 1'b0;
+                    LO_write = 1'b0;
+                    REGDEST_SELETOR = 2'b00; //
+                    MEMtoREG_SELETOR = 4'b0110; //
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b00; 
+                    SScontrol = 2'b00;
+                    LScontrol = 2'b10; //
+                    MemDataReg_write = 1'b0; // 
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b000;
+                    excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
+                    EPCCtrl = 1'b0;
+                    reset_out = 1'b0;
+
+                    counter = 3'b000;
+                end
+
             end
 
             lb_st: begin
                 if (counter == 3'b000) begin
+
                     state = lb_st;
-
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b0; //
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b001; // ?????
-                    ULAout_ctrl = 1'b0;
-                    srcA_selector = 1'b1; //
-                    srcB_selector = 2'b10; //
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b01; //
-                    SScontrol = 2'b00;
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b1; //
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
-
-                    counter = counter + 1;
-                end
-                else if (counter == 3'b001) begin
-                    state = common_st; //
 
                     PC_control = 1'b0;
                     ReadWrite = 1'b0;
@@ -2099,7 +2253,7 @@ always @(posedge clock) begin
                     RegWrite = 1'b1; //
                     AWrite = 1'b0;
                     BWrite = 1'b0;
-                    ULAop = 3'b000; 
+                    ULAop = 3'b000;
                     ULAout_ctrl = 1'b0;
                     srcA_selector = 1'b0;
                     srcB_selector = 2'b00;
@@ -2107,378 +2261,343 @@ always @(posedge clock) begin
                     LO_write = 1'b0;
                     REGDEST_SELETOR = 2'b00; //
                     MEMtoREG_SELETOR = 4'b0110; //
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b00;
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b00; 
                     SScontrol = 2'b00;
                     LScontrol = 2'b11; //
+                    MemDataReg_write = 1'b1; // ????????
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b000;
+                    excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
+                    EPCCtrl = 1'b0;
+                    reset_out = 1'b0;
+
+                    counter = counter + 1;
+
+                end
+                else if (counter == 3'b001) begin
+                    state = common_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0;
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b1; //
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b000;
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b0;
+                    srcB_selector = 2'b00;
+                    HI_write = 1'b0;
+                    LO_write = 1'b0;
+                    REGDEST_SELETOR = 2'b00; //
+                    MEMtoREG_SELETOR = 4'b0110; //
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b00; 
+                    SScontrol = 2'b00;
+                    LScontrol = 2'b11; //
+                    MemDataReg_write = 1'b0; // 
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b000;
+                    excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
+                    EPCCtrl = 1'b0;
+                    reset_out = 1'b0;
+
+                    counter = 3'b000;
+                end
+            end
+
+            stores_st: begin
+                // clock 1
+                if (counter == 3'b000) begin
+                    state = stores_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0; //
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b0;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b001; //
+                    ULAout_ctrl = 1'b1; //
+                    srcA_selector = 1'b1; //
+                    srcB_selector = 2'b10; //
+                    HI_write = 1'b0;
+                    LO_write = 1'b0;
+                    REGDEST_SELETOR = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b10; //
+                    SScontrol = 2'b00;
+                    LScontrol = 2'b00;
                     MemDataReg_write = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
-                    counter = 3'b000; //
+                    counter = counter + 1;
                 end
+                // clock 2 - wait 1
+                else if (counter == 3'b001) begin
+                    state = stores_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0; //
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b0;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b001; //
+                    ULAout_ctrl = 1'b0; //
+                    srcA_selector = 1'b1; //
+                    srcB_selector = 2'b10; //
+                    HI_write = 1'b0;
+                    LO_write = 1'b0;
+                    REGDEST_SELETOR = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b10; //
+                    SScontrol = 2'b00;
+                    LScontrol = 2'b00;
+                    MemDataReg_write = 1'b0;
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b000;
+                    excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
+                    EPCCtrl = 1'b0;
+                    reset_out = 1'b0;
+
+                    counter = counter + 1;
+                end
+                // clock 3 - wait 2
+                else if (counter == 3'b010) begin
+                    state = stores_st;
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0; //
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b0;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b001; //
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b1; //
+                    srcB_selector = 2'b10; //
+                    HI_write = 1'b0;
+                    LO_write = 1'b0;
+                    REGDEST_SELETOR = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b10; //
+                    SScontrol = 2'b00;
+                    LScontrol = 2'b00;
+                    MemDataReg_write = 1'b0;
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b000;
+                    excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
+                    EPCCtrl = 1'b0;
+                    reset_out = 1'b0;
+
+                    counter = counter + 1;
+                end
+                // clock 4 - wait 3
+                else if (counter == 3'b011) begin
+                    case(OPCODE)
+                        sw_op : begin
+                            state = sw_st;
+                        end
+                        sh_op: begin
+                            state = sh_st;
+                        end
+                        sb_op: begin
+                            state = sb_op;
+                        end
+                    endcase
+
+                    PC_control = 1'b0;
+                    ReadWrite = 1'b0; //
+                    IRWrite = 1'b0;
+                    RegWrite = 1'b0;
+                    AWrite = 1'b0;
+                    BWrite = 1'b0;
+                    ULAop = 3'b001; //
+                    ULAout_ctrl = 1'b0;
+                    srcA_selector = 1'b1; //
+                    srcB_selector = 2'b10; //
+                    HI_write = 1'b0;
+                    LO_write = 1'b0;
+                    REGDEST_SELETOR = 2'b00;
+                    MEMtoREG_SELETOR = 4'b0000;
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b10; //
+                    SScontrol = 2'b00;
+                    LScontrol = 2'b00;
+                    MemDataReg_write = 1'b1; //
+                    shiftAmt = 1'b0;
+                    shiftSrc = 1'b0;
+                    shiftCtrl = 3'b000;
+                    excpCtrl = 2'b00;
+                    excpCtrl2 = 2'b00;
+                    EPCCtrl = 1'b0;
+                    reset_out = 1'b0;
+
+                    counter = 3'b000;
+                end
+
             end
 
             sw_st: begin
-                if (counter == 3'b000) begin
-                    state = sw_st;
 
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b0;
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b001; // ?????
-                    ULAout_ctrl = 1'b1;    //
-                    srcA_selector = 1'b1;  //
-                    srcB_selector = 2'b10; //
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b00;
-                    SScontrol = 2'b00;
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b0;
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
+                state = common_st;
 
-                    counter = counter + 1;
-                end
-                else if (counter == 3'b001) begin
-                    state = sw_st;
+                PC_control = 1'b0;
+                ReadWrite = 1'b1; //
+                IRWrite = 1'b0;
+                RegWrite = 1'b0;
+                AWrite = 1'b0;
+                BWrite = 1'b0;
+                ULAop = 3'b000; 
+                ULAout_ctrl = 1'b0;
+                srcA_selector = 1'b0;
+                srcB_selector = 2'b00;
+                HI_write = 1'b0;
+                LO_write = 1'b0;
+                REGDEST_SELETOR = 2'b00;
+                MEMtoREG_SELETOR = 4'b0000;
+                pcsrc_selector = 3'b000;
+                iord_selector = 2'b10; //
+                SScontrol = 2'b01; //
+                LScontrol = 2'b00;
+                MemDataReg_write = 1'b0;
+                shiftAmt = 1'b0;
+                shiftSrc = 1'b0;
+                shiftCtrl = 3'b000;
+                excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
+                EPCCtrl = 1'b0;
+                reset_out = 1'b0;
 
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b0;
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b000; 
-                    ULAout_ctrl = 1'b0;
-                    srcA_selector = 1'b0;
-                    srcB_selector = 2'b00;
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00; 
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b10; //
-                    SScontrol = 2'b00;
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b1; //
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
-
-                    counter = counter + 1;
-                end
-                else if (counter == 3'b010) begin
-                    state = common_st; //
-
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b1; // 
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b000; 
-                    ULAout_ctrl = 1'b0;
-                    srcA_selector = 1'b0;
-                    srcB_selector = 2'b00;
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b10; //
-                    SScontrol = 2'b01; //
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b0;
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
-
-                    counter = 3'b000; //
-                end
+                counter = 3'b000;
+                
             end
 
             sh_st: begin
-                if (counter == 3'b000) begin
-                    state = sh_st;
+                state = common_st;
 
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b0;
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b001; // ?????
-                    ULAout_ctrl = 1'b1;    //
-                    srcA_selector = 1'b1;  //
-                    srcB_selector = 2'b10; //
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b00;
-                    SScontrol = 2'b00;
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b0;
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
+                PC_control = 1'b0;
+                ReadWrite = 1'b1; //
+                IRWrite = 1'b0;
+                RegWrite = 1'b0;
+                AWrite = 1'b0;
+                BWrite = 1'b0;
+                ULAop = 3'b000; 
+                ULAout_ctrl = 1'b0;
+                srcA_selector = 1'b0;
+                srcB_selector = 2'b00;
+                HI_write = 1'b0;
+                LO_write = 1'b0;
+                REGDEST_SELETOR = 2'b00;
+                MEMtoREG_SELETOR = 4'b0000;
+                pcsrc_selector = 3'b000;
+                iord_selector = 2'b10; //
+                SScontrol = 2'b10; //
+                LScontrol = 2'b00;
+                MemDataReg_write = 1'b0;
+                shiftAmt = 1'b0;
+                shiftSrc = 1'b0;
+                shiftCtrl = 3'b000;
+                excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
+                EPCCtrl = 1'b0;
+                reset_out = 1'b0;
 
-                    counter = counter + 1;
-                end
-                else if (counter == 3'b001) begin
-                    state = sh_st;
+                counter = 3'b000;
 
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b0;
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b000; 
-                    ULAout_ctrl = 1'b0;
-                    srcA_selector = 1'b0;
-                    srcB_selector = 2'b00;
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00; 
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b10; //
-                    SScontrol = 2'b00;
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b1; //
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
-
-                    counter = counter + 1;
-                end
-                else if (counter == 3'b010) begin
-                    state = common_st; //
-
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b1; // 
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b000; 
-                    ULAout_ctrl = 1'b0;
-                    srcA_selector = 1'b0;
-                    srcB_selector = 2'b00;
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b10; //
-                    SScontrol = 2'b10; //
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b0;
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
-
-                    counter = 3'b000; //
-                end
             end
 
             sb_st: begin
+                state = common_st;
+
+                PC_control = 1'b0;
+                ReadWrite = 1'b1; //
+                IRWrite = 1'b0;
+                RegWrite = 1'b0;
+                AWrite = 1'b0;
+                BWrite = 1'b0;
+                ULAop = 3'b000; 
+                ULAout_ctrl = 1'b0;
+                srcA_selector = 1'b0;
+                srcB_selector = 2'b00;
+                HI_write = 1'b0;
+                LO_write = 1'b0;
+                REGDEST_SELETOR = 2'b00;
+                MEMtoREG_SELETOR = 4'b0000;
+                pcsrc_selector = 3'b000;
+                iord_selector = 2'b10; //
+                SScontrol = 2'b11; //
+                LScontrol = 2'b00;
+                MemDataReg_write = 1'b0;
+                shiftAmt = 1'b0;
+                shiftSrc = 1'b0;
+                shiftCtrl = 3'b000;
+                excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
+                EPCCtrl = 1'b0;
+                reset_out = 1'b0;
+
+                counter = 3'b000;
+
+            end
+
+            overflow_st: begin
                 if (counter == 3'b000) begin
-                    state = sb_st;
+                    state = overflow_st;
 
                     PC_control = 1'b0;
-                    ReadWrite = 1'b0;
+                    ReadWrite = 1'b0; //
                     IRWrite = 1'b0;
-                    RegWrite = 1'b0;
+                    RegWrite = 1'b1;
                     AWrite = 1'b0;
                     BWrite = 1'b0;
-                    ULAop = 3'b001; // ?????
-                    ULAout_ctrl = 1'b1;    //
-                    srcA_selector = 1'b1;  //
-                    srcB_selector = 2'b10; //
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b00;
-                    SScontrol = 2'b00;
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b0;
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
-
-                    counter = counter + 1;
-                end
-                else if (counter == 3'b001) begin
-                    state = sb_st;
-
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b0;
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b000; 
+                    ULAop = 3'b010; 
                     ULAout_ctrl = 1'b0;
                     srcA_selector = 1'b0;
-                    srcB_selector = 2'b00;
+                    srcB_selector = 2'b01;
                     HI_write = 1'b0;
                     LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00; 
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b10; //
-                    SScontrol = 2'b00;
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b1; //
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
-
-                    counter = counter + 1;
-                end
-                else if (counter == 3'b010) begin
-                    state = common_st; //
-
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b1; // 
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b000; 
-                    ULAout_ctrl = 1'b0;
-                    srcA_selector = 1'b0;
-                    srcB_selector = 2'b00;
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b10; //
+                    REGDEST_SELETOR = 2'b11;
+                    MEMtoREG_SELETOR = 4'b0111;
+                    pcsrc_selector = 3'b000;
+                    iord_selector = 2'b11; //
                     SScontrol = 2'b11; //
                     LScontrol = 2'b00;
                     MemDataReg_write = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
-                    excpCtrl = 2'b00;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
-
-                    counter = 3'b000; //
-                end
-            end
-
-            overflow_st: begin
-                if (counter == 3'b000) begin
-                    state = overflow_st; //
-
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b0; // 
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b010; 
-                    ULAout_ctrl = 1'b0;
-                    srcA_selector = 1'b0;
-                    srcB_selector = 2'b01;
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b11; //
-                    SScontrol = 2'b00; //
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b0;
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
                     excpCtrl = 2'b01;
+                    excpCtrl2 = 2'b01;
                     EPCCtrl = 1'b1;
                     reset_out = 1'b0;
 
-                    counter = counter + 1; //
+                    counter = counter + 1;
                 end
-                else if (counter == 3'b001 || counter == 3'b010) begin
-                    state = overflow_st; //
-
-                    PC_control = 1'b0;
-                    ReadWrite = 1'b0; // 
-                    IRWrite = 1'b0;
-                    RegWrite = 1'b0;
-                    AWrite = 1'b0;
-                    BWrite = 1'b0;
-                    ULAop = 3'b010; 
-                    ULAout_ctrl = 1'b0;
-                    srcA_selector = 1'b0;
-                    srcB_selector = 2'b01;
-                    HI_write = 1'b0;
-                    LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
-                    iord_selector = 2'b11; //
-                    SScontrol = 2'b00; //
-                    LScontrol = 2'b00;
-                    MemDataReg_write = 1'b0;
-                    shiftAmt = 1'b0;
-                    shiftSrc = 1'b0;
-                    shiftCtrl = 3'b000;
-                    excpCtrl = 2'b01;
-                    EPCCtrl = 1'b0;
-                    reset_out = 1'b0;
-
-                    counter = counter + 1; //
-                end
-                else if (counter == 3'b011) begin
-                    state = common_st; //
+                else if (counter == 3'b001) begin
+                    state = common_st;
 
                     PC_control = 1'b1;
-                    ReadWrite = 1'b0; // 
+                    ReadWrite = 1'b1; //
                     IRWrite = 1'b0;
                     RegWrite = 1'b0;
                     AWrite = 1'b0;
@@ -2489,22 +2608,56 @@ always @(posedge clock) begin
                     srcB_selector = 2'b01;
                     HI_write = 1'b0;
                     LO_write = 1'b0;
-                    REGDEST_SELETOR = 2'b00;
-                    MEMtoREG_SELETOR = 4'b0000;
-                    pcsrc_selector = 2'b00;
+                    REGDEST_SELETOR = 2'b11;
+                    MEMtoREG_SELETOR = 4'b0111;
+                    pcsrc_selector = 3'b100;
                     iord_selector = 2'b11; //
-                    SScontrol = 2'b00; //
+                    SScontrol = 2'b11; //
                     LScontrol = 2'b00;
                     MemDataReg_write = 1'b0;
                     shiftAmt = 1'b0;
                     shiftSrc = 1'b0;
                     shiftCtrl = 3'b000;
                     excpCtrl = 2'b01;
+                    excpCtrl2 = 2'b01;
                     EPCCtrl = 1'b0;
                     reset_out = 1'b0;
 
-                    counter = 3'b000; //
+                    counter = 3'b000;
                 end
+            end
+
+            rte_st: begin
+                state = common_st; //
+
+                PC_control = 1'b1; //
+                ReadWrite = 1'b0; 
+                IRWrite = 1'b0;
+                RegWrite = 1'b0;
+                AWrite = 1'b0;
+                BWrite = 1'b0;
+                ULAop = 3'b000; 
+                ULAout_ctrl = 1'b0;
+                srcA_selector = 1'b0;
+                srcB_selector = 2'b00;
+                HI_write = 1'b0;
+                LO_write = 1'b0;
+                REGDEST_SELETOR = 2'b00;
+                MEMtoREG_SELETOR = 4'b0000;
+                pcsrc_selector = 3'b011; //
+                iord_selector = 2'b00;
+                SScontrol = 2'b00;
+                LScontrol = 2'b00;
+                MemDataReg_write = 1'b0;
+                shiftAmt = 1'b0;
+                shiftSrc = 1'b0;
+                shiftCtrl = 3'b000;
+                excpCtrl = 2'b00;
+                excpCtrl2 = 2'b00;
+                EPCCtrl = 1'b0; 
+                reset_out = 1'b0;
+
+                counter = 3'b000; //
             end
             
         endcase

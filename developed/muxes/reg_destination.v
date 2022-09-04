@@ -9,6 +9,6 @@ module reg_destination(
 
     output wire [4:0] regDest_output
 );
-    // 00 RT, 01 OFFSET, 10 31
-    assign regDest_output = seletor_regdest[1] ? 5'd31 : (seletor_regdest[0] ? OFFSET : RT);
+    // 00 RT, 01 OFFSET, 10 31, 11 30
+    assign regDest_output = seletor_regdest[1] ? (seletor_regdest[0] ? 5'd30 : 5'd31) : (seletor_regdest[0] ? OFFSET : RT);
 endmodule

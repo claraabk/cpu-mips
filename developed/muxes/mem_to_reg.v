@@ -8,11 +8,12 @@ module mem_to_reg(
     input wire [31:0] LO_output,     //                          - 0100
     input wire [31:0] SL_16to32_output,              //          - 0101
     input wire [31:0] LScontrol_output,                 //       - 0110
+    input wire [31:0] excpCtrl2_output,                 //       - 0111
 
     output reg [31:0] MEMtoREG_output
 );
 
-    assign MEMtoREG_output = MEMtoREG_SELETOR[2] ? (MEMtoREG_SELETOR[1] ? LScontrol_output : (MEMtoREG_SELETOR[0] ? SL_16to32_output : LO_output)) : (MEMtoREG_SELETOR[1] ? (MEMtoREG_SELETOR[0] ? HI_output : shift_reg_output) : (MEMtoREG_SELETOR[0] ? sign_extend1_32_output : ULA_output));
+    assign MEMtoREG_output = MEMtoREG_SELETOR[2] ? (MEMtoREG_SELETOR[1] ? (MEMtoREG_SELETOR[0] ? excpCtrl2_output : LScontrol_output) : (MEMtoREG_SELETOR[0] ? SL_16to32_output : LO_output)) : (MEMtoREG_SELETOR[1] ? (MEMtoREG_SELETOR[0] ? HI_output : shift_reg_output) : (MEMtoREG_SELETOR[0] ? sign_extend1_32_output : ULA_output));
 
     //assign MEMtoREG_output = MEMtoREG_SELETOR == 4'b0000 ? ULA_output : MEMtoREG_SELETOR == 4'b0100 ? sign_extend1_32_output : shift_reg_output;
 

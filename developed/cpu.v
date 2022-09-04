@@ -65,7 +65,7 @@ module cpu(
 
     wire [31:0] sign_extend1_32_output;
 
-    wire [1:0] pcsrc_selector;
+    wire [2:0] pcsrc_selector;
     wire [31:0] conc_SL26_PC_output;
     wire [31:0] ULAresult;
 
@@ -92,6 +92,12 @@ module cpu(
 
     wire [1:0] excpCtrl;
     wire [31:0] excpCtrl_output;
+
+    wire [1:0] excpCtrl2;
+    wire [31:0] excpCtrl2_output;
+
+    wire [31:0] sign_extend8_32_output;
+    wire [31:0] shift_left_2_output;
 
 
     Registrador PC_(
@@ -134,6 +140,11 @@ module cpu(
         ReadWrite,
         SScontrol_output,
         Mem_output
+    );
+
+    sign_extend8_32 sign_extend8_32_(
+        Mem_output,
+        sign_extend8_32_output
     );
 
     Instr_Reg IR_(
@@ -215,6 +226,11 @@ module cpu(
         A_output
     );
 
+    shift_left_2 SL2_(
+        sign_extend_1_out,
+        shift_left_2_output
+    );
+
     Registrador B_(
         clock,
         reset,
@@ -267,6 +283,7 @@ module cpu(
         LO_output,
         SL_16to32_output,
         LScontrol_output,
+        excpCtrl2_output,
 
         memToReg_output
     );
@@ -282,6 +299,7 @@ module cpu(
         srcB_selector,
         B_output,
         sign_extend_1_out,
+        shift_left_2_output,
         srcB_output
     );
 
@@ -321,6 +339,7 @@ module cpu(
         conc_SL26_PC_output,
         ULAout,
         EPC_output,
+        sign_extend8_32_output,
 
         PCSrc_output
     );
@@ -328,6 +347,11 @@ module cpu(
     excpCtrl excpCtrl_(
         excpCtrl,
         excpCtrl_output
+    );
+
+    excpCtrl2 excpCtrl2_(
+        excpCtrl2,
+        excpCtrl2_output
     );
 
     control control(
@@ -361,6 +385,7 @@ module cpu(
         GT,
         Overflow,
         excpCtrl,
+        excpCtrl2,
         EPCCtrl,
         reset
     );
