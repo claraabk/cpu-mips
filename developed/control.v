@@ -113,7 +113,7 @@ parameter srav_funct = 6'b000111;
 parameter jr_funct = 6'b001000;
 parameter mfhi_funct = 6'b010000;
 parameter mflo_funct = 6'b010010;
-parameter break_funct = 6'b111111;
+parameter break_funct = 6'b001101;
 parameter rte_funct = 6'b010011;
 
 initial begin
@@ -1922,7 +1922,7 @@ always @(posedge clock) begin
                     counter = counter + 1;
                 end
                 else if (counter == 3'b001) begin
-                    state = common_st;
+                    state = break_st;
 
                     PC_control = 1'b0; //
                     ReadWrite = 1'b0;
@@ -2421,7 +2421,7 @@ always @(posedge clock) begin
                             state = sh_st;
                         end
                         sb_op: begin
-                            state = sb_op;
+                            state = sb_st;
                         end
                     endcase
 
