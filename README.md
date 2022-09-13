@@ -10,6 +10,8 @@ Link: https://drive.google.com/file/d/1N809XXxXkt4eS5ujSzMqBHeMXthd2r5K/view
 - Beatriz Ferre  |  @biaferre
 - Luiza Diniz  |  @dinizluiza
 - Clara Kenderessy  |  @claraabk
+- Matheus Silva 
+- Ernesto
 
 
 ### Intruções implementadas pelo grupo:
